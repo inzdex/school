@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thing</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-family: sans-serif;
+            cursor: pointer;
+        }
+        video {
+            display: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        #message {
+            font-size: 1.5em;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="message">Click Me</div>
+    <video id="videoPlayer" controls>
+        <source src="https://dn720407.ca.archive.org/0/items/rick-roll/Rick%20Roll.ia.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <script>
+        const video = document.getElementById('videoPlayer');
+        const message = document.getElementById('message');
+
+        document.body.addEventListener('click', async () => {
+            message.style.display = 'none';
+            video.style.display = 'block';
+
+            try {
+                if (video.requestFullscreen) {
+                    await video.requestFullscreen();
+                } else if (video.webkitRequestFullscreen) {
+                    await video.webkitRequestFullscreen();
+                } else if (video.msRequestFullscreen) {
+                    await video.msRequestFullscreen();
+                }
+
+                await video.play();
+            } catch (err) {
+                console.error("Error playing video or entering fullscreen:", err);
+            }
+        }, { once: true }); // Ensure it only triggers once
+    </script>
+</body>
+</html>
